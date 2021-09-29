@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB persistence 비교</title>
+
+</head>
+<body>
+</body>
+</html>
+<script th:inline="javascript" type="text/javascript">
+	/* <![CDATA[ */
+	var status = /*[[${status}]]*/;
+	/* ]]> */
+
+	if (status === "1") {
+		// 성공
+		alert("추가되었습니다.");
+		document.location.href = "/user/list"
+	} else {
+		// 실패
+		alert("추가 실패!!");
+		document.location.href = "/user/regForm"
+	}
+</script>

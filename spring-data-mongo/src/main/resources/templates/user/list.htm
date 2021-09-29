@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB persistence 비교</title>
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #444444;
+        }
+    </style>
+</head>
+<body>
+<h2>MongoDB persistence 비교</h2>
+<h3><b>Spring-data-mongodb</b></h3>
+
+유저타입: <select name="userType" onchange="javascript:userTypeFilter(this.value);">
+    <option value="">선택</option>
+    <option th:each="entry: ${userTypeList}"
+            th:selected="${entry.key eq param?.userType?.toString()}"
+            th:text="${entry.value}"
+            th:value="${entry.key}">
+    </option>
+</select>
+<p/>
+
+총 유저수:
+<label th:text="${result.size()}"></label>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>UserType</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user: ${result}">
+        <td th:text="${user._id}">defaultId</td>
+        <td th:text="${user.userType}">defaultUserType</td>
+    </tr>
+    </tbody>
+</table>
+<p/>
+<a href="/user/regForm">등록 하기로 이동</a>
+<p/>
+</body>
+</html>
+<script>
+	function userTypeFilter(userType) {
+		document.location.href = "/user/list?userType=" + userType;
+	}
+</script>

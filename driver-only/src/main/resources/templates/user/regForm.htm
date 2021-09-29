@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB persistence 비교</title>
+</head>
+<body>
+<h2>MongoDB persistence 비교</h2>
+<h3><b>Driver Only</b></h3>
+<form action="/user/regProc" method="POST" name="regForm">
+    아이디: <input name="id" size="20" style="border: 1px solid #3f3f3f;" type="text">
+    <p/>
+    비번: <input name="passwd" size="20" style="border: 1px solid #3f3f3f;" type="text">
+    <p/>
+
+    유저타입: <select name="userType">
+    <option value="">선택</option>
+    <option th:each="entry: ${userTypeList}"
+            th:text="${entry.value}"
+            th:value="${entry.key}">
+    </option>
+</select>
+    <p/>
+    <input type="submit" value="계정 추가"/>
+</form>
+</body>
+</html>

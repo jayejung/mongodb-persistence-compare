@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'war'
+    id 'org.springframework.boot' version '2.5.4'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+}
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+    springBootVersion = '2.5.4'
+    querydslVersion = '4.3.1'
+}
+
+
+group 'mongo-persistence-compare'
+version '1.0-SNAPSHOT'
+
+bootWar {
+    archiveBaseName = 'spring-data-mongo-repository'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.querydsl:querydsl-mongodb:${querydslVersion}"
+    implementation "com.querydsl:querydsl-apt:${querydslVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.4.1"
+    implementation "org.springframework.data:spring-data-commons:2.5.4"
+    implementation "org.springframework.data:spring-data-mongodb:3.2.5"
+    implementation "org.mongodb:mongodb-driver-sync:4.3.2"
+    implementation "org.mongodb:mongodb-driver-core:4.3.2"
+    implementation "org.mongodb:bson:4.3.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    springDataMongo = true
+    library = 'com.querydsl:querydsl-apt'
+    querydslSourcesDir = querydslSrcDir
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+task deleteGeneratedSources(type: Delete) {
+    delete file(querydslSrcDir)
+}
+
+tasks.withType(JavaCompile) {it.dependsOn('deleteGeneratedSources')}
