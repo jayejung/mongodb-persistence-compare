@@ -1,6 +1,6 @@
 # MongoDB Persistence 비교
 
-* 주로 사용되는 3가지 방법을 간단하게 구현해서, 어떤 방법이 훨씬 직관적일지 보기 위한 예시. Service를 별도 구현하지 않고, controller에 때려 넣었음. (mongo access하는 코드 비교만
+* 주로 사용되는 3가지 방법을 간단하게 구현해서, 어떤 방법이 훨씬 직관적일지 보기 위한 예시. Service를 별도 구현하지 않고, controller에 우겨 넣었음. (mongo access하는 코드 비교만
   하면 되니..)
 <hr/>
 
